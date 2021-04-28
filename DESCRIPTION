@@ -1,13 +1,13 @@
 Package: SIT
-Title: What the Package Does (One Line, Title Case)
+Title: Conduct The Sliced Independence Test
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Canyi",
+           family = "Cen",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "chency1997@ruc.edu.cn",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: This function computes the sit coefficient between two vectors x and y, possibly all paired coefficients for a matrix.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
