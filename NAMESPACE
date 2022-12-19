@@ -2,7 +2,10 @@
 
 export(blocksum)
 export(calculateSIT)
-export(gen_data)
 export(sitcor)
 importFrom(Rcpp,sourceCpp)
+importFrom(stats,complete.cases)
+importFrom(stats,pnorm)
+importFrom(stats,runif)
+importFrom(stats,sd)
 useDynLib(SIT, .registration = TRUE)

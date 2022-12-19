@@ -8,6 +8,9 @@ NULL
 ## usethis namespace: end
 NULL
 
+#' @importFrom stats complete.cases pnorm runif sd
+NULL
+
 .onUnload <- function (libpath) {
   library.dynam.unload("SIT", libpath)
 }

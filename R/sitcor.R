@@ -7,9 +7,10 @@
 #'
 #' @param x Vector of numeric values in the first coordinate.
 #' @param y Vector of numeric values in the second coordinate.
+#' @param c The number of observations in each slice.
 #' @param pvalue Whether or not to return the p-value of rejecting
 #' independence, if TRUE the function also returns the standard deviation of
-#' xi.
+#' sit.
 #' @param ties Do we need to handle ties? If ties=TRUE the algorithm assumes
 #' that the data has ties and employs the more elaborated theory for
 #' calculating s.d. and P-value. Otherwise, it uses the simpler theory. There
@@ -19,6 +20,8 @@
 #' test with nperm permutations is employed to estimate the P-value. Usually,
 #' there is no need for the permutation test. The asymptotic theory is good
 #' enough.
+#' @param nperm In the case of a permutation test, \code{nperm} is the number
+#' of permutations to do.
 #' @param factor Whether to transform integers into factors, the default is to
 #' leave them alone.
 #' @return In the case pvalue=FALSE, function returns the value of the sit
@@ -41,14 +44,13 @@
 #'        xlim(c(13.5,24))+ylim(c(13.5,24))+       coord_fixed() +
 #'        theme(legend.position="bottom")
 #' # Compute one of the coefficients
-#' sitcor(peas$parent,peas$child, c = 4,pvalue=TRUE)
+#' sitcor(peas$parent,peas$child, c = 4, pvalue=TRUE)
 #' sitcor(peas$child,peas$parent, c = 4)
 #' # Compute all the coefficients
 #' sitcor(peas, c = 4)
 #'
 #' @author Yilin Zhang, Canyi Chen & Liping Zhu
-#' @seealso dcov xicor
-#' @references Zhang Y., Chen C., & Zhu L. (2021). Sliced Independence Test.
+#' @references Zhang Y., Chen C., & Zhu L. (2022). Sliced Independence Test. Statistica Sinica. https://doi.org/10.5705/ss.202021.0203.
 #' @keywords ~methods ~htest
 #' @export
 sitcor <- function(x,
@@ -59,6 +61,7 @@ sitcor <- function(x,
                    method = "asymptotic",
                    nperm = 199,
                    factor = FALSE) {
+  # Factor variables are converted to integers here.
   if (factor == TRUE) {
     if (!is.numeric(x))
       x <- as.numeric(factor(x))
@@ -74,6 +77,13 @@ sitcor <- function(x,
   if (!(is.numeric(x) || is.logical(x)))
     stop("'x' must be numeric")
   stopifnot(is.atomic(x))
+  if (!is.null(y)) {
+    if (!(is.numeric(y) || is.logical(y)))
+      stop("'y' must be numeric")
+    stopifnot(is.atomic(y))
+  }
+
+
 
   if (is.null(y)) {
     ncy <- ncx <- ncol(x)
@@ -142,7 +152,7 @@ sitcor <- function(x,
   # If P-value needs to be computed:
   if (pvalue) {
     if (ties == FALSE) {
-      var1 <- 2 / 5 * 2 / (c - 1)
+      var1 <- 2 / 5 * 2 / (c - 1) / n
       return(list(
         sitcor = sitcor,
         sd = sqrt(var1),
@@ -155,8 +165,36 @@ sitcor <- function(x,
 
       # If there are ties, and the theoretical variance is used:
       if (method == "asymptotic") {
-        stop("Asymptotic methods have not been available
-             in the presence of ties.")
+        # stop("Asymptotic methods have not been available in the presence of ties.")
+        # The following steps calculate the theoretical variance in the presence of ties:
+        PI <- rank(x, ties.method = "random")
+        # fr[i] is number of j s.t. y[j] <= y[i], divided by n.
+        fr <- rank(y, ties.method = "max")/n
+        # gr[i] is number of j s.t. y[j] >= y[i], divided by n.
+        gr <- rank((- y), ties.method = "max")/n
+        ord <- order(PI)
+        fr <- fr[ord]
+
+        CU <- mean(gr* (1 - gr))
+
+        qfr <- sort(fr)
+        ind <- c(1:n)
+        ind2 <- 2*n - 2*ind + 1
+        ai <- mean(ind2*qfr*qfr)/n
+        ci <- mean(ind2*qfr)/n
+        cq <- cumsum(qfr)
+        m <- (cq + (n - ind)*qfr)/n
+        b <- mean(m^2)
+        v <- (ai - 2*b + ci^2)/(CU^2)
+
+        var1 <- v * 2 / (c - 1) / n
+        return(list(
+          sitcor = sitcor,
+          sd = sqrt(var1),
+          pval = 1 - pnorm(sqrt(n) * sitcor / sqrt(var1))
+        ))
+
+
       }
       #
       # If the permutation test is to be used for calculating P-value:
@@ -164,7 +202,7 @@ sitcor <- function(x,
         rp <- rep(0, nperm)
         for (i in 1:nperm) {
           x1 <- runif(n, 0, 1)
-          rp[i] <- calculateSIT(x1, y)
+          rp[i] <- calculateSIT(x1, y, c = c)
         }
         return(list(
           sitcor = sitcor,

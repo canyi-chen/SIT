@@ -1,20 +1,28 @@
 Package: SIT
-Title: Conduct The Sliced Independence Test
-Version: 0.0.0.9000
+Title: Association Measurement Through Sliced Independence Test (SIT)
+Version: 0.1.0
 Authors@R: 
     person(given = "Canyi",
-           family = "Cen",
+           family = "Chen",
            role = c("aut", "cre"),
            email = "chency1997@ruc.edu.cn",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This function computes the sit coefficient between two vectors x and y, possibly all paired coefficients for a matrix.
+           comment = c(ORCID = "0000-0002-0673-5812"))
+Description: This function computes the sit coefficient between two vectors x and y, 
+  possibly all paired coefficients for a matrix. The reference for the methods implemented here is 
+  Zhang, Yilin, Canyi Chen, and Liping Zhu. 2022. "Sliced Independence Test." Statistica Sinica. https://doi.org/10.5705/ss.202021.0203. 
+  This package incorporates the Galton peas example.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 LinkingTo: 
     Rcpp,
     RcppArmadillo
 Imports: 
-    Rcpp
+    Rcpp,
+    stats
+Date: 2022-12-19
+Suggests: 
+    ggplot2,
+    psychTools

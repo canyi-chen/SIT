@@ -2,13 +2,15 @@
 % Please edit documentation in R/RcppExports.R
 \name{blocksum}
 \alias{blocksum}
-\title{Blocksum}
+\title{Compute the block-wise sum of a vector.}
 \usage{
 blocksum(r, c)
 }
 \arguments{
-\item{x}{An integer vector}
+\item{r}{An integer vector}
+
+\item{c}{The number of observations in each block}
 }
 \description{
-Blocksum
+Compute the block-wise sum of a vector.
 }
