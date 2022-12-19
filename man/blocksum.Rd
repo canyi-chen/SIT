@@ -11,6 +11,9 @@ blocksum(r, c)
 
 \item{c}{The number of observations in each block}
 }
+\value{
+The function returns the block sum of the vector.
+}
 \description{
 Compute the block-wise sum of a vector.
 }

@@ -6,6 +6,7 @@
 #'
 #' @param r An integer vector
 #' @param c The number of observations in each block
+#' @return The function returns the block sum of the vector.
 #' @export
 blocksum <- function(r, c) {
     .Call(`_SIT_blocksum`, r, c)

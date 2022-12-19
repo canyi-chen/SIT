@@ -9,6 +9,7 @@ using namespace Rcpp;
 //'
 //' @param r An integer vector
 //' @param c The number of observations in each block
+//' @return The function returns the block sum of the vector.
 //' @export
 // [[Rcpp::export]]
 double blocksum(arma::ivec r, int c)

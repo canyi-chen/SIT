@@ -2,20 +2,18 @@
 
 Has fixed this.
 
-From: Uwe Ligges <ligges@statistik.tu-dortmund.de>
-Date: 2022-12-19 17:41:22
-To:  Canyi Chen <chency1997@ruc.edu.cn>,CRAN <cran-submissions@r-project.org>
-Subject: Re: CRAN Submission SIT 0.1.0>Thanks, we see:
->
->
->   The Description field contains
->     https://doi.org/10.5705/ss.202021.0203.  This package incorporates the
->   Please write DOIs as <doi:10.prefix/suffix>.
->
->Please fix and resubmit.
->
->Best,
->Uwe Ligges
+Thanks,
+
+Please do not start the description with "This package", package name, title or similar.
+
+Please add \value to .Rd files regarding exported methods and explain the functions results in the documentation. Please write about the structure of the output (class) and also what the output means. (If a function does not return a value, please document that too, e.g. \value{No return value, called for side effects} or similar)
+Missing Rd-tags:
+     blocksum.Rd: \value
+
+Please fix and resubmit.
+
+Best,
+Victoria Wimmer
 
 
 
