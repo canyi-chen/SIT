@@ -148,7 +148,7 @@ plot(
   xlim = c(0, 1),
   ylim = c(0, 1),
   lwd = 1.2,
-  main = "Q-Q Plot of P Values"
+  main = "Scatter Plot of Empirical Rejection Rate"
 )
 abline(h = alpha, col = "orange")
 ```
