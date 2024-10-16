@@ -5,6 +5,7 @@ This is a update to a previously-published package "https://cran.r-project.org/w
 
 
 ## R CMD check results
+
 There were no ERRORs, WARNINGs or NOTEs.
 
 
