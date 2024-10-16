@@ -110,6 +110,7 @@ abline(0, 1, col = "orange")
 ``` r
 library(SIT)
 library(future.apply)
+#> Loading required package: future
 plan(multisession, workers = 11)
 
 set.seed(47)
@@ -153,4 +154,4 @@ plot(
 abline(h = alpha, col = "orange")
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-rejection_rate-1.png" width="100%" />
