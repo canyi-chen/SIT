@@ -26,3 +26,5 @@ Date: 2024-10-15
 Suggests: 
     ggplot2,
     psychTools
+URL: https://github.com/canyi-chen/SIT
+BugReports: https://github.com/canyi-chen/SIT/issues
